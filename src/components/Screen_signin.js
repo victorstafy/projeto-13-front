@@ -14,38 +14,44 @@ export default function Raiz(){
     const [callAPI,setCallAPI]= useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const testing=true;
+
+    if (testing){
         if (callAPI){
-            console.log(callAPI)
-            console.log(isLoading)
-            request_login({email:email,password:password})
-            .then((res) => {
-                setLogin_info_api(res.data);
-                setIsLoading(false);
-                navigate('/hoje')
-            })
-            .catch(err => {alert('Ocorreu um erro');
-            setIsLoading(false);
-            });
+            alert('miguezao')
+            navigate('/carteira')
         }
-    }, [callAPI]); 
+    }
+    else{
+        useEffect(() => {
+            if (callAPI){
+                request_login({email:email,password:password},true)
+                .then((res) => {
+                    setLogin_info_api(res.data);
+                    setIsLoading(false);
+                    navigate('/carteira')
+                })
+                .catch(err => {alert('Ocorreu um erro');
+                setIsLoading(false);
+                });
+            }
+        }, [callAPI]); 
+    }
+    
 
     return (
         <>
-            <img src='logo.png' alt='loading'/>
-            <form 
+            <div className="form_title">MyWallet</div> 
+            <form className="form_content"
             onSubmit={()=>{setCallAPI(true)}}
             noValidate
             >    
                 <input type="email" placeholder="email" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} required></input>
                 <input type="password" placeholder="senha" disabled={isLoading} value={password} onChange={e => setPassword(e.target.value)} required></input>
-                {isLoading ? <Button1 type={"submit"} onClick={()=>{setIsLoading(true);setCallAPI(true)}} disabled={isLoading}> 
-                {isLoading ? <ThreeDots/> :  'Entrar'} </Button1> :
-                <Button type={"submit"} onClick={()=>{setIsLoading(true);setCallAPI(true)}} disabled={isLoading}> 
-                {isLoading ? <ThreeDots/> :  'Entrar'} </Button>}
+                <Button type={"submit"} onClick={()=>{setIsLoading(true);setCallAPI(true)}} disabled={isLoading}> Entrar </Button>
             </form>
-            <Link to={'/cadastro'}>
-                <LinkText> Não tem uma conta? Cadastre-se! </LinkText>
+            <Link to={'/registrar'}>
+                Primeira vez? Cadastre-se!
             </Link>
         </>
     )

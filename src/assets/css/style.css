@@ -53,13 +53,13 @@ input{
   line-height: 23px;
 }
 
-input::-webkit-input-placeholder { 
+input::placeholder { 
   color: red;
 }
 
 .button{
   width: 326px;
-  height: 46px;
+  height: 88px;
   background: #A328D6;
   border-radius: 5px;
   padding: 6px 0px 36px 0px;
@@ -83,6 +83,12 @@ input::-webkit-input-placeholder {
   font-weight: 700;
   font-size: 26px;
   line-height: 31px;
+  color: #FFFFFF;
+}
+
+.wallet_title>ion-icon {
+  font-size: 24px;
+  font-weight: 700;
   color: #FFFFFF;
 }
 
@@ -157,4 +163,30 @@ input::-webkit-input-placeholder {
   font-weight: 700;
   font-size: 17px;
   line-height: 20px;
+}
+
+.add_change{
+  width: 156px;
+  height: 114px;
+  padding: 10px;
+  justify-content: left;
+
+  background: #A328D6;
+  border-radius: 5px;
+}
+
+.add_change_title{
+  width: 64px;
+  height: 40px;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+
+  color: #FFFFFF;
+}
+
+.add_change_title>ion-icon {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
 }
