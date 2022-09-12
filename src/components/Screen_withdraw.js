@@ -2,7 +2,7 @@ import { send_balance } from './call_api';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-export default function Screen_withdraw(){
+export default function Screen_withdraw(token){
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
     
@@ -12,7 +12,7 @@ export default function Screen_withdraw(){
 
     useEffect(() => {
         if (callAPI){
-            send_balance({value:value,title:title,type:'withdraw'})
+            send_balance({value:value,title:title,type:'withdraw'},token)
             .then((res) => {
                 setIsLoading(false);
                 navigate('/carteira')

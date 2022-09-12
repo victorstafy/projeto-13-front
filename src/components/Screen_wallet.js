@@ -1,7 +1,6 @@
 import { request_balance } from './call_api';
 import {Link} from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 
 function Balance_register({date,title,value,type}){
     return (
@@ -17,11 +16,11 @@ function Balance_register({date,title,value,type}){
 }
 
 
-export default function Screen_wallet(token){
-    const [name, setName] = useState('fulano');
+export default function Screen_wallet(token,login_info_api){
+    const name= login_info_api.name;
     const [balance_list, setBalance_list]=useState([
-        {date:'27/08',title:'kkk',value:30,type:'deposit'},
-        {date:'28/08',title:'rrr',value:40,type:'withdraw'}
+        // {date:'27/08',title:'kkk',value:30,type:'deposit'},
+        // {date:'28/08',title:'rrr',value:40,type:'withdraw'}
     ]);
     let total_balance=0;
     // const navigate = useNavigate();
@@ -29,8 +28,8 @@ export default function Screen_wallet(token){
     useEffect(() => {
         request_balance(token)
         .then((res) => {
-            setBalance_list(res.data.balance_list);
-            setName(res.data.name);
+            setBalance_list(res.data);
+            // setName(res.data.name);
         })
         .catch(err => {alert('Ocorreu um erro');
         });

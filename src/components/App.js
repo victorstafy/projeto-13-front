@@ -1,5 +1,4 @@
 import { useState, createContext, useContext } from "react";
-import UserContext from "../contexts/UserContext";
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Screen_signin from './Screen_signin';
 import Screen_signup from './Screen_signup';
@@ -22,11 +21,11 @@ export default function App () {
 
                     <Route path="/registrar" element={<Screen_signup setLogin_info_api={setLogin_info_api} />}></Route>
 
-                    <Route path="/deposito" element={<Screen_deposit />}></Route>
+                    <Route path="/deposito" element={<Screen_deposit token={token}/>}></Route>
 
-                    <Route path="/retirada" element={<Screen_withdraw/>}></Route>
+                    <Route path="/retirada" element={<Screen_withdraw token={token}/>}></Route>
 
-                    <Route path="/carteira" element={<Screen_wallet token={token}/>}></Route>
+                    <Route path="/carteira" element={<Screen_wallet login_info_api={login_info_api} token={token}/>}></Route>
 
                 </Routes>
             </BrowserRouter>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://localhost:5000/';
+const BASE_URL = 'https:/localhost:5000';
 
 function request_signup(body) {
   const promise = axios.post(`${BASE_URL}/signup`,body);
@@ -12,8 +12,8 @@ function request_login(body) {
     return promise;
 }
 
-function send_balance(body) {
-    const promise = axios.post(`${BASE_URL}/balance`,body);
+function send_balance(body,token) {
+    const promise = axios.post(`${BASE_URL}/balance`,body,{ headers: { Authorization: `Bearer ${token}` } });
     return promise;
 }
 
