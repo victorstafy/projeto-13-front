@@ -9,6 +9,7 @@ import Screen_wallet from './Screen_wallet';
 
 export default function App () {
     const [login_info_api, setLogin_info_api] = useState({});
+    const [token, setToken] = useState('');
     
     // <UserContext.Provider value={{login_info_api, setLogin_info_api}}></UserContext.Provider>
     return(
@@ -17,15 +18,15 @@ export default function App () {
             <BrowserRouter>
                 <Routes>
 
-                    <Route path="/" element={<Screen_signin setLogin_info_api={setLogin_info_api}/>}></Route>
+                    <Route path="/" element={<Screen_signin setLogin_info_api={setLogin_info_api} setToken={setToken}/>}></Route>
 
-                    <Route path="/registrar" element={<Screen_signup />}></Route>
+                    <Route path="/registrar" element={<Screen_signup setLogin_info_api={setLogin_info_api} />}></Route>
 
-                    {/* <Route path="/deposito" element={<Screen_deposit />}></Route>
+                    <Route path="/deposito" element={<Screen_deposit />}></Route>
 
                     <Route path="/retirada" element={<Screen_withdraw/>}></Route>
 
-                    <Route path="/carteira" element={<Screen_wallet />}></Route> */}
+                    <Route path="/carteira" element={<Screen_wallet token={token}/>}></Route>
 
                 </Routes>
             </BrowserRouter>

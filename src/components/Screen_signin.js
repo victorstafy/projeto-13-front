@@ -6,13 +6,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function Screen_signin({setLogin_info_api}){
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    
     const [isLoading, setIsLoading] = useState(false);
     const [callAPI,setCallAPI]= useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (callAPI){
-            request_login({email:email,password:password},true)
+            request_login({email:email,password:password})
             .then((res) => {
                 setLogin_info_api(res.data);
                 setIsLoading(false);

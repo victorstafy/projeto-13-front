@@ -3,26 +3,31 @@ import {Link} from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-export default function Screen_signin({setLogin_info_api}){
-    const [name, setName] = useState('');
+export default function Screen_signup({setLogin_info_api,setToken}){
     const [password, setPassword] = useState('');
-    const [password_confirm, setPassword_confirm] = useState('');
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password_confirm, setPassword_confirm] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
     const [callAPI,setCallAPI]= useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (callAPI){
-            request_signup({name:name,email:email,password:password,password_confirm:password_confirm},true)
+        if (callAPI && (password===password_confirm)){
+            request_signup({name:name,email:email,password:password,password_confirm:password_confirm})
             .then((res) => {
                 setLogin_info_api(res.data);
+                setToken(res.data.token)
                 setIsLoading(false);
                 navigate('/')
             })
             .catch(err => {alert('Ocorreu um erro');
             setIsLoading(false);
             });
+        }
+        else if (password!==password_confirm){
+            alert('senhas não conferem')
         }
     }, [callAPI]); 
 

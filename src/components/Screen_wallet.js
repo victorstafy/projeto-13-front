@@ -3,46 +3,86 @@ import {Link} from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-export default function Screen_signin({setLogin_info_api}){
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [password_confirm, setPassword_confirm] = useState('');
-    const [email, setEmail] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [callAPI,setCallAPI]= useState(false);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (callAPI){
-            request_balance({name:name,email:email,password:password,password_confirm:password_confirm},true)
-            .then((res) => {
-                setLogin_info_api(res.data);
-                setIsLoading(false);
-                navigate('/')
-            })
-            .catch(err => {alert('Ocorreu um erro');
-            setIsLoading(false);
-            });
-        }
-    }, [callAPI]); 
-
-    
+function Balance_register({date,title,value,type}){
     return (
         <>
-            <div className="form_title">MyWallet</div> 
-            <div className="form_content"
-            onSubmit={()=>{setCallAPI(true)}}
-            noValidate
-            >   <input type="text" placeholder="Nome" disabled={isLoading} value={name} onChange={e => setName(e.target.value)} required></input>
-                <input type="email" placeholder="E-mail" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} required></input>
-                <input type="password" placeholder="Senha" disabled={isLoading} value={password} onChange={e => setPassword(e.target.value)} required></input>
-                <input type="password" placeholder="Confirme a senha" disabled={isLoading} value={password_confirm} onChange={e => setPassword_confirm(e.target.value)} required></input>
+        <div className="wallet_register">
+            <div className="wallet_register_date">{date}</div>
+            <div className="wallet_register_title">{title}</div>
+            {type==='deposit'?<div className="wallet_register_value_deposit">{value}</div>:
+            <div className="wallet_register_value_withdraw">{value}</div>}
+        </div>
+        </>
+    )
+}
 
-                <div className="button" type="submit" onClick={()=>{setIsLoading(true);setCallAPI(true)}}> Cadastrar </div>
+
+export default function Screen_wallet(token){
+    const [name, setName] = useState('fulano');
+    const [balance_list, setBalance_list]=useState([
+        {date:'27/08',title:'kkk',value:30,type:'deposit'},
+        {date:'28/08',title:'rrr',value:40,type:'withdraw'}
+    ]);
+    let total_balance=0;
+    // const navigate = useNavigate();
+
+    useEffect(() => {
+        request_balance(token)
+        .then((res) => {
+            setBalance_list(res.data.balance_list);
+            setName(res.data.name);
+        })
+        .catch(err => {alert('Ocorreu um erro');
+        });
+    }, []); 
+
+    balance_list.map((balance)=>(balance.type==='deposit' ? total_balance=total_balance+balance.value: 
+    total_balance=total_balance-balance.value))
+     
+
+    return (
+        <>
+            <div className="wallet_title">Olá, {name}
+                <Link to={'/'}>
+                    <ion-icon name="exit-outline"></ion-icon>
+                </Link>
+            </div> 
+            {balance_list.length!==0?
+                <div className="wallet">
+                    {balance_list.map((balance)=>(
+                        <Balance_register 
+                        date={balance.date}
+                        title={balance.title}
+                        value={balance.value}
+                        type={balance.type}
+                        />
+                    )) }
+                    <div className='wallet_balance'> 
+                        <div className='wallet_balance_text'>Saldo</div>
+                        {(total_balance>0)?<div className='wallet_balance_pos_value'>{total_balance}</div>:
+                        <div className='wallet_balance_neg_value'>{total_balance}</div>}
+                    </div>
+                </div>: <div className="wallet_empty"> Não há registros de entrada ou saída </div>}
+
+            <div className='add_change_panel'>
+                <div className='add_change'>
+                    <div className='add_change_title'>
+                    <p>Nova entrada</p> 
+                    <Link to={'/deposito'}>
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                    </Link>
+                    </div>
+                </div>
+                <div className='add_change'>
+                    <div className='add_change_title'>
+                        <p>Nova saída</p> 
+                        <Link to={'/retirada'}>
+                            <ion-icon name="remove-circle-outline"></ion-icon>
+                        </Link>
+                    </div>
+                </div>
             </div>
-            <Link to={'/'}>
-                <div>Já tem uma conta? Entre agora!</div>
-            </Link>
+        
         </>
     )
 }
