@@ -2,22 +2,22 @@ import axios from 'axios';
 
 const BASE_URL = 'https://localhost:5000/';
 
-function request_signup(body,testing) {
+function request_signup(body) {
   const promise = axios.post(`${BASE_URL}/signup`,body);
   return promise;
 }
 
-function request_login(body,testing) {
+function request_login(body) {
     const promise = axios.post(`${BASE_URL}/signin`,body);
     return promise;
 }
 
-function send_balance(body,testing) {
+function send_balance(body) {
     const promise = axios.post(`${BASE_URL}/balance`,body);
     return promise;
 }
 
-function request_balance(token,testing) {
+function request_balance(token) {
     const promise = axios.get(`${BASE_URL}/balance`,{ headers: { Authorization: `Bearer ${token}` } });
     return promise;
 }

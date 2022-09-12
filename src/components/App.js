@@ -8,22 +8,24 @@ import Screen_withdraw from './Screen_withdraw';
 import Screen_wallet from './Screen_wallet';
 
 export default function App () {
-    const [movie_id, setMovie_id] = useState('');
-    <UserContext.Provider value={{movie_id, setMovie_id}}></UserContext.Provider>
+    const [login_info_api, setLogin_info_api] = useState({});
+    
+    // <UserContext.Provider value={{login_info_api, setLogin_info_api}}></UserContext.Provider>
     return(
         <>
             {
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Screen_signin setMovie_id={setMovie_id}/>}></Route>
+
+                    <Route path="/" element={<Screen_signin setLogin_info_api={setLogin_info_api}/>}></Route>
 
                     <Route path="/registrar" element={<Screen_signup />}></Route>
 
-                    <Route path="/deposito" element={<Screen_deposit />}></Route>
+                    {/* <Route path="/deposito" element={<Screen_deposit />}></Route>
 
                     <Route path="/retirada" element={<Screen_withdraw/>}></Route>
 
-                    <Route path="/carteira" element={<Screen_wallet />}></Route>
+                    <Route path="/carteira" element={<Screen_wallet />}></Route> */}
 
                 </Routes>
             </BrowserRouter>
